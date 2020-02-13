@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Call Blocker</string>
+    <string name="menu_black_list">Black List</string>
+    <string name="menu_log">Log</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="warning_title">Warning!</string>
+    <string name="warning_content">The application will not work without your permission.</string>
+    <string name="disagree">Disagree</string>
+    <string name="agree">Agree</string>
+    <string name="close_app_title">Close App</string>
+    <string name="close_app_content">The application will close!</string>
+    <string name="exit">Exit</string>
+    <string name="fab_add_keyboard">Add from keyboard</string>
+    <string name="fab_add_contact">Add from contact</string>
+    <string name="fab_add_all_history">Add from call history</string>
+    <string name="phone_number_existed">Phone number already exists.</string>
+    <string name="not_phone_number">Subject does not have a phone number.</string>
+    <string name="fab_add_keyboard_hint">Enter phone number</string>
+    <string name="fab_add_keyboard_hint_name">Name</string>
+    <string name="fab_add_keyboard_button">Add</string>
+    <string name="fab_cancel_keyboard_button">Cancel</string>
+    <string name="call_log_title">Call logs</string>
+</resources>

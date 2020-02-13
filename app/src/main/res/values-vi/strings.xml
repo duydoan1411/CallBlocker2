@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chặn cuộc gọi</string>
+    <string name="menu_black_list">Danh sách đen</string>
+    <string name="menu_log">Nhật kí</string>
+    <string name="warning_title">Cảnh Báo!</string>
+    <string name="warning_content">Ứng dụng sẽ không hoạt động nếu bạn không cấp quyền.</string>
+    <string name="disagree">Từ chối</string>
+    <string name="agree">Đồng ý</string>
+    <string name="close_app_content">Ứng dụng sẽ đóng</string>
+    <string name="close_app_title">Đóng ứng dụng</string>
+    <string name="exit">Thoát</string>
+    <string name="fab_add_contact">Thêm từ danh bạ</string>
+    <string name="fab_add_keyboard">Thêm từ bàn phím</string>
+    <string name="fab_add_all_history">Thêm từ lịch sử cuộc gọi</string>
+</resources>
