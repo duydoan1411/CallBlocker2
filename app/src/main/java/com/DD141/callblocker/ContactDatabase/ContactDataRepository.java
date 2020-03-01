@@ -1,12 +1,9 @@
-package com.DD141.callblocker;
+package com.DD141.callblocker.ContactDatabase;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Database;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactDataRepository {
@@ -41,7 +38,7 @@ public class ContactDataRepository {
 
     public LiveData<List<Contact>> getAllContact(){
 
-        return contactDAO.getAllContact();
+        return listLiveData;
     }
 
     private static class InsertContactAsyncTask extends AsyncTask<Contact, Void, Void>{

@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.DD141.callblocker.ContactDatabase.Contact;
+import com.DD141.callblocker.ContactDatabase.ContactDatabase;
+import com.DD141.callblocker.ContactDatabase.ContactViewModel;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

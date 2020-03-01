@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.DD141.callblocker.ContactDatabase.Contact;
+
 import java.util.List;
 
 public class RVContactCallLogApdater extends RecyclerView.Adapter<RVContactCallLogApdater.ContactViewHolder> {

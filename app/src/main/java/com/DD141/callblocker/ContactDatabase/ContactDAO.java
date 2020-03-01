@@ -1,4 +1,4 @@
-package com.DD141.callblocker;
+package com.DD141.callblocker.ContactDatabase;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

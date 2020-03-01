@@ -1,4 +1,4 @@
-package com.DD141.callblocker;
+package com.DD141.callblocker.ContactDatabase;
 
 import android.content.Context;
 
@@ -18,12 +18,11 @@ public abstract class ContactDatabase extends RoomDatabase {
 
     public abstract ContactDAO contactDAO();
 
-    public static ContactDatabase getInstance(Context context){
+    public static synchronized ContactDatabase getInstance(Context context){
         if (sContactDatabase == null){
             sContactDatabase = Room.databaseBuilder(context.getApplicationContext(), ContactDatabase.class, DATABASE_NAME)
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
-                    .allowMainThreadQueries()
                     .build();
         }
 

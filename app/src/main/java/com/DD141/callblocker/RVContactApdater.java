@@ -10,6 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.DD141.callblocker.ContactDatabase.Contact;
+import com.DD141.callblocker.ContactDatabase.ContactDAO;
+import com.DD141.callblocker.ContactDatabase.ContactDataRepository;
+import com.DD141.callblocker.ContactDatabase.ContactDatabase;
+
 import java.util.List;
 
 public class RVContactApdater extends RecyclerView.Adapter<RVContactApdater.ContactViewHolder> {
@@ -40,9 +45,7 @@ public class RVContactApdater extends RecyclerView.Adapter<RVContactApdater.Cont
         holder.deleteImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactDAO contactDAO;
-                ContactDatabase contactDatabase = ContactDatabase.getInstance(v.getContext());
-                contactDatabase.contactDAO().deleteContact(contacts.get(position));
+                MainActivity.viewModel.delete(contacts.get(position));
             }
         });
     }

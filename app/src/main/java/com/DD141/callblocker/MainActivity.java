@@ -1,27 +1,22 @@
 package com.DD141.callblocker;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,19 +27,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.DD141.callblocker.ContactDatabase.Contact;
+import com.DD141.callblocker.ContactDatabase.ContactDatabase;
+import com.DD141.callblocker.ContactDatabase.ContactViewModel;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
     private ContactDatabase contactDatabase;
     private View view;
 
-    private ContactViewModel viewModel;
+    public static ContactViewModel viewModel;
     private CallLogListDialog callLogListDialog;
 
     public static Context contextOfApplication;
@@ -252,11 +246,9 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
             @Override
             public void onClick(View v) {
                 if (!etNumber.getText().toString().equals("")){
-                    if (!isExistContact(etNumber.getText().toString())){
-                        String name = etName.getText().toString().equals("")? "NoName" : etName.getText().toString();
-                        viewModel.insert(new Contact(etName.getText().toString(), etNumber.getText().toString()));
-                        a.dismiss();
-                    }else Toast.makeText(getApplicationContext(),"Số điện thoại đã tồn tại", Toast.LENGTH_SHORT).show();
+                    String name = etName.getText().toString().equals("")? "NoName" : etName.getText().toString();
+                    new CheckContactAsyncTask().execute(etNumber.getText().toString(), name);
+                    a.dismiss();
                 }else Toast.makeText(getApplicationContext(),"Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
             }
         });
@@ -286,12 +278,7 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
                     String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                             .replaceAll("\n"," ");
 
-                    if (!isExistContact(number)) {
-                        contactDatabase.contactDAO().insertContact(new Contact(name, number));
-
-                    }else {
-                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.phone_number_existed),Toast.LENGTH_SHORT).show();
-                    }
+                    new CheckContactAsyncTask().execute(number, name);
                 }else {
                     Toast.makeText(getApplicationContext(),getResources().getString(R.string.not_phone_number),Toast.LENGTH_SHORT).show();
                 }
@@ -299,20 +286,35 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
         }
     }
 
-    private boolean isExistContact(String number){
+    class CheckContactAsyncTask extends AsyncTask<String, Void, Boolean>{
 
-        List<Contact> contactList = contactDatabase.contactDAO().getAllContactNonLiveData();
-        boolean check = false;
-        for (Contact item: contactList)
-            try {
-                if (item.getNumber().equals(number)) {
-                    check = true;
-                    break;
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            List<Contact> contactList = contactDatabase.contactDAO().getAllContactNonLiveData();
+            boolean check = false;
+            for (Contact item: contactList)
+                try {
+                    if (item.getNumber().equals(strings[0])) {
+                        check = true;
+                        break;
+                    }
+                }catch (Exception e){
+                    continue;
                 }
-            }catch (Exception e){
-                continue;
+            if (!check) {
+                contactDatabase.contactDAO().insertContact(new Contact(strings[1], strings[0]));
             }
-        return check;
+            return check;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean check) {
+            super.onPostExecute(check);
+            if(check){
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.phone_number_existed),Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     @Override
@@ -364,13 +366,9 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
 
     @Override
     public void clickOnItem(Contact data) {
-        if (!isExistContact(data.getNumber())) {
-            contactDatabase.contactDAO().insertContact(data);
-            if (callLogListDialog != null){
-                callLogListDialog.dismiss();
-            }
-        }else {
-            Toast.makeText(getApplicationContext(),getResources().getString(R.string.phone_number_existed),Toast.LENGTH_SHORT).show();
+        new CheckContactAsyncTask().execute(data.getNumber(), data.getName());
+        if (callLogListDialog != null){
+            callLogListDialog.dismiss();
         }
     }
 }
