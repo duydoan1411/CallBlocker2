@@ -20,4 +20,5 @@
     <string name="fab_add_keyboard_button">Add</string>
     <string name="fab_cancel_keyboard_button">Cancel</string>
     <string name="call_log_title">Call logs</string>
+    <string name="enter_phone_number">Please enter the phone number .</string>
 </resources>

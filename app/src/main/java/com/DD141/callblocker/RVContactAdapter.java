@@ -17,10 +17,10 @@ import com.DD141.callblocker.ContactDatabase.ContactDatabase;
 
 import java.util.List;
 
-public class RVContactApdater extends RecyclerView.Adapter<RVContactApdater.ContactViewHolder> {
+public class RVContactAdapter extends RecyclerView.Adapter<RVContactAdapter.ContactViewHolder> {
     private List<Contact> contacts;
 
-    RVContactApdater(List<Contact> contacts){
+    RVContactAdapter(List<Contact> contacts){
         this.contacts = contacts;
     }
 

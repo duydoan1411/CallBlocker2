@@ -27,10 +27,10 @@ public interface LogDAO {
     @Query("Select * from logs where id = :id")
     Log getLog(int id);
 
-    @Query("Select * from logs")
+    @Query("Select * from logs order by date ASC")
     LiveData<List<Log>> getAllLog();
 
-    @Query("Select * from logs")
+    @Query("Select * from logs order by date ASC")
     List<Log> getAllLogNonLiveData();
 
 }

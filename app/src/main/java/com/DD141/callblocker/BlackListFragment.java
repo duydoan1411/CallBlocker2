@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.DD141.callblocker.ContactDatabase.Contact;
-import com.DD141.callblocker.ContactDatabase.ContactDatabase;
 import com.DD141.callblocker.ContactDatabase.ContactViewModel;
 
 import java.util.ArrayList;
@@ -40,24 +39,20 @@ public class BlackListFragment extends Fragment {
 
         anhXa();
 
-
-        ContactDatabase database;
-        database = ContactDatabase.getInstance(container.getContext());
-
         //contactList = database.contactDAO().getAllContact();
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(container.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        RVContactApdater rvContactApdater = new RVContactApdater(new ArrayList<Contact>());
-        recyclerView.setAdapter(rvContactApdater);
+        RVContactAdapter rvContactAdapter = new RVContactAdapter(new ArrayList<Contact>());
+        recyclerView.setAdapter(rvContactAdapter);
 
         contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         contactViewModel.getAllContact().observe(this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
                 Collections.reverse(contacts);
-                rvContactApdater.setData(contacts);
+                rvContactAdapter.setData(contacts);
             }
         });
 

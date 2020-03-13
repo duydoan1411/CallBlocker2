@@ -31,6 +31,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.DD141.callblocker.ContactDatabase.Contact;
 import com.DD141.callblocker.ContactDatabase.ContactDatabase;
 import com.DD141.callblocker.ContactDatabase.ContactViewModel;
+import com.DD141.callblocker.LogDatabase.LogViewModel;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
     private View view;
 
     public static ContactViewModel viewModel;
+    public static LogViewModel viewModelLog;
     private CallLogListDialog callLogListDialog;
 
     public static Context contextOfApplication;
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
         });
 
         viewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+        viewModelLog = new ViewModelProvider(this).get(LogViewModel.class);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmnet_container, new BlackListFragment()).commit();
@@ -249,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements RVContactCallLogA
                     String name = etName.getText().toString().equals("")? "NoName" : etName.getText().toString();
                     new CheckContactAsyncTask().execute(etNumber.getText().toString(), name);
                     a.dismiss();
-                }else Toast.makeText(getApplicationContext(),"Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(getApplicationContext(),getString(R.string.enter_phone_number), Toast.LENGTH_SHORT).show();
             }
         });
         a.show();

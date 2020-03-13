@@ -16,8 +16,21 @@ public class Log {
     private String name, number;
     private Date date;
 
+    @Ignore
+    private Boolean isHeader;
+
+
+    @Ignore
+    private String header;
+
     public Log(){
 
+    }
+
+    @Ignore
+    public Log(String header) {
+        this.header = header;
+        this.isHeader = true;
     }
 
     @Ignore
@@ -25,6 +38,27 @@ public class Log {
         this.name = name;
         this.number = number;
         this.date = date;
+        this.isHeader = false;
+    }
+
+    @Ignore
+    public String getHeader() {
+        return header;
+    }
+
+    @Ignore
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    @Ignore
+    public boolean getIsHeader() {
+        return isHeader;
+    }
+
+    @Ignore
+    public void setIsHeader(boolean header) {
+        this.isHeader = header;
     }
 
     public int getId() {
